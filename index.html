@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;700&family=Inconsolata:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>John Lamy's portfolio website</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      :root {
+        /* Colour palette */
+        --primary-text: #463f3a;
+        --secondary-text: #8a817c;
+        --light-text: #f4f3ee;
+
+        --prinary-bg: #f4f3ee;
+        --secondary-bg: #bcb8b1;
+        --dark-bg: #8a817c;
+        --darker-bg: #463f3a;
+        --loud-bg: #e0afa0;
+
+        --font-family-text: "Golos Text", Arial, Helvetica, sans-serif;
+        --font-family-logo: "Inconsolata", monospace;
+
+        --font-weight-regular: 400;
+        --font-weight-bold: 500;
+        --font-weight-bolder: 700;
+
+        --font-size-h1: 3rem;
+        --font-size-h2: 2.25rem;
+        --font-size-h3: 1.25rem;
+        --font-size-t1: 1.1rem;
+        --font-size-t2: 1rem;
+        --font-size-t3: 0.85rem;
+
+        --box-shadow: 0.25rem 0.25rem 0.75rem rgba(0, 0, 0, 0.25),
+          0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+      }
+
+      @media (min-width: 800px) {
+        :root {
+          --font-size-h1: 4rem;
+          --font-size-h2: 3.25rem;
+          --font-size-h3: 2.25rem;
+          --font-size-t1: 1.2rem;
+          --font-size-t2: 1.05rem;
+          --font-size-t3: 0.9rem;
+        }
+      }
+
+      /* Base styles */
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin-trim: 0;
+        background-color: var(--prinary-bg);
+        color: var(--darker-bg);
+        font-family: var(--font-family-text);
+        font-size: var(--font-size-t2);
+        line-height: 1.6;
+      }
+
+      header,
+      section,
+      article {
+        padding: 5rem 2rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        line-height: 1;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: var(--font-size-h1);
+      }
+      h2 {
+        font-size: var(--font-size-h2);
+      }
+      h3 {
+        font-size: var(--font-size-h3);
+      }
+
+      a,
+      a:visited,
+      a:active {
+        color: var(--light-text);
+        font-weight: var(--font-weight-bold);
+        text-decoration: underline;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      :focus {
+        outline: 2px solid var(--loud-bg);
+        outline-offset: 2px;
+      }
+
+      .lead {
+        font-size: var(--font-size-t1);
+      }
+      .small {
+        font-size: var(--font-size-t3);
+      }
+      p {
+        font-size: var(--font-size-t2);
+      }
+
+      em {
+        font-weight: var(--font-weight-bold);
+        font-style: normal;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        background-color: var(--loud-bg);
+        color: var(--primary-text);
+        text-decoration: none;
+        cursor: pointer;
+        font-size: var(--font-size-t1);
+        text-transform: uppercase;
+        letter-spacing: 0.034rem;
+        font-weight: var(--font-weight-bold);
+        transition: transform 200ms ease-in-out;
+      }
+
+      .btn:hover {
+        transform: scale(1.1);
+      }
+
+      /* Navbar section styles */
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 0 1rem 1rem;
+      }
+
+      .logo {
+        max-width: 150px;
+        word-spacing: 1rem;
+        text-decoration: none;
+        outline: none;
+      }
+
+      .logo b {
+        color: var(--primary-text);
+      }
+
+      .logo:active {
+        color: var(--primary-text);
+      }
+
+      .logo__prefix {
+        text-transform: capitalize;
+        font-weight: var(--font-weight-regular);
+        font-size: var(--font-size-t1);
+        letter-spacing: 0.08rem;
+      }
+
+      .logo__suffix {
+        text-transform: uppercase;
+        font-weight: var(--font-weight-bold);
+        font-size: calc(var(--font-size-t3 * 4 / 3));
+        color: var(--dark-bg);
+        font-style: italic;
+        margin-left: 0.4rem;
+      }
+
+      .nav {
+        position: fixed;
+        background: var(--darker-bg);
+        color: var(--light-text);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        transform: translateX(100%);
+        transition: transform 250ms cubic-bezier(0.5, 0, 0.5, 1);
+      }
+
+      .nav_list {
+        list-style: none;
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav__link {
+        color: inherit;
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-h2);
+        text-decoration: none;
+        text-transform: capitalize;
+      }
+
+      .nav__link:hover {
+        color: var(--loud-bg);
+      }
+
+      .nav-toggle {
+        padding: 0.5em;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        z-index: 1000;
+      }
+
+      .nav-open .nav {
+        transform: translateX(0);
+      }
+
+      .nav-open .nav-toggle {
+        position: fixed;
+      }
+
+      .nav-open .nav-toggle__icon {
+        transform: rotate(0.625turn);
+      }
+
+      .nav-open .nav-toggle__icon::before {
+        transform: rotate(90deg) translateX(-6px);
+      }
+
+      .nav-open .nav-toggle__icon::after {
+        opacity: 0;
+      }
+
+      .nav-toggle__icon {
+        display: block;
+        position: relative;
+      }
+
+      .nav-toggle__icon,
+      .nav-toggle__icon::before,
+      .nav-toggle__icon::after {
+        background: var(--loud-bg);
+        width: 2rem;
+        height: 3px;
+        border-radius: 1rem;
+        transition: transform 250ms ease-in-out;
+      }
+
+      .nav-toggle__icon::before,
+      .nav-toggle__icon::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+      }
+
+      .nav-toggle__icon::before {
+        top: 6px;
+      }
+      .nav-toggle__icon::after {
+        bottom: 6px;
+      }
+
+      /* Header section styles */
+
+      .section__title {
+        margin-bottom: 0.25em;
+      }
+
+      .section__title--header {
+        font-weight: var(--font-weight-regular);
+      }
+
+      .section__title--header em {
+        display: block;
+      }
+
+      .section__subtitle {
+        margin: 0;
+        font-size: var(--font-size-h3);
+      }
+
+      .section__subtitle--header,
+      .section__subtitle--about {
+        padding: 0.25rem 1rem;
+        background-color: var(--loud-bg);
+        margin-bottom: 1rem;
+      }
+
+      .header {
+        position: relative;
+      }
+
+      .header__img {
+        box-shadow: var(--box-shadow);
+      }
+
+      .section__subtitle--header {
+        display: inline-block;
+      }
+
+      @media (min-width: 600px) {
+        .header {
+          display: grid;
+          width: min-content;
+          margin: 0 auto;
+          grid-column-gap: 1rem;
+          grid-template-areas:
+            "img title"
+            "img subtitle";
+          grid-template-columns: min-content max-content;
+        }
+
+        .header__img {
+          grid-area: img;
+          min-width: 250px;
+          position: relative;
+          z-index: 2;
+        }
+
+        .section__subtitle--header {
+          align-self: flex-start;
+          grid-column: -1 / 1;
+          grid-row: 2;
+          text-align: right;
+          position: relative;
+          left: -1.5rem;
+          width: calc(100% + 1.5rem);
+        }
+
+        .btn {
+          padding: 0.75rem 2.8rem;
+        }
+      }
+
+      /* Hero (services) section styles */
+
+      .hero {
+        background-color: var(--darker-bg);
+        background-image: url(/assets/imgs/my-services-bg.jpg);
+        background-size: cover;
+        background-blend-mode: multiply;
+        color: var(--light-text);
+        text-align: center;
+      }
+
+      .section__title--hero {
+        text-transform: capitalize;
+        color: var(--loud-bg);
+        position: relative;
+      }
+
+      .section__title--hero::after {
+        content: "";
+        display: block;
+        width: 18rem;
+        height: 0.25rem;
+        margin: 0.5rem auto 1rem;
+        background: var(--light-text);
+        opacity: 0.45;
+      }
+
+      .hero__service {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 1.5rem 0 1rem;
+      }
+
+      .hero__service h2 {
+        text-transform: capitalize;
+      }
+
+      @media (min-width: 800px) {
+        .hero__services {
+          display: flex;
+          max-width: 980px;
+          margin: 2.2rem auto;
+        }
+
+        .hero__service + .hero__service {
+          margin-left: 3.5rem;
+        }
+
+        .hero__service h2 {
+          margin-bottom: 1.5rem;
+          font-size: calc(var(--font-size-h2) * 3 / 4);
+        }
+      }
+
+      /* About Me section styles */
+
+      .about-me {
+        max-width: 980px;
+        margin: 0 auto;
+      }
+
+      .about-me__img {
+        box-shadow: var(--box-shadow);
+      }
+
+      .about-me__content {
+        margin-top: -4rem;
+      }
+
+      @media (min-width: 600px) {
+        .about-me {
+          display: grid;
+          grid-template-columns: 1fr 200px;
+          grid-template-areas:
+            "title img"
+            "subtitle img"
+            "text img";
+          grid-column-gap: 2rem;
+        }
+
+        .section__title--about {
+          grid-area: title;
+        }
+
+        .section__subtitle--about {
+          grid-column: 1 / -1;
+          grid-row: 2;
+          position: relative;
+          left: -1em;
+          width: calc(100% + 2em);
+          padding-left: 1em;
+          padding-right: calc(200px + 4rem);
+        }
+
+        .about-me__img {
+          grid-area: img;
+          position: relative;
+          z-index: 2;
+        }
+      }
+
+      /* Portfolio links section styles */
+
+      .my-work {
+        background-color: var(--darker-bg);
+        color: var(--light-text);
+        text-align: center;
+      }
+
+      .section__title--my-work,
+      .section__subtitle--my-work span {
+        text-transform: uppercase;
+      }
+
+      .section__subtitle--my-work {
+        color: var(--loud-bg);
+        font-weight: var(--font-weight-bold);
+        margin-bottom: 2.5rem;
+      }
+
+      .my-work__portfolio {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+
+      .my-work__portfolio__img-link {
+        background-color: var(--loud-bg);
+        overflow: hidden;
+      }
+
+      .my-work__portfolio__img {
+        transition: transform 750ms cubic-bezier(0.5, 0, 0.5, 1),
+          opacity 250ms linear;
+      }
+
+      .my-work__portfolio__img-link:focus {
+        position: relative;
+        z-index: 2;
+      }
+
+      .my-work__portfolio__img:hover,
+      .my-work__portfolio__img-link:focus .my-work__portfolio__img {
+        transform: scale(1.2);
+        opacity: 0.75;
+      }
+
+      @media (min-width: 800px) {
+        .my-work {
+          margin-top: -6rem;
+        }
+      }
+
+      /* Footer icon section styles */
+      .footer {
+        background-color: var(--darker-bg);
+        color: var(--loud-bg);
+        text-align: center;
+        padding: 2.5em 0;
+        font-size: var(--font-size-h3);
+      }
+
+      .footer a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .footer__link {
+        font-weight: var(--font-weight-bold);
+      }
+
+      .footer__link:hover,
+      .social-icons:hover {
+        opacity: 0.7;
+      }
+
+      .footer__link:hover {
+        text-decoration: underline;
+      }
+
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 0;
+        padding: 0;
+      }
+
+      .social-icons__icon {
+        margin: 0 1.5rem;
+        font-size: var(--font-size-h2);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="navbar">
+      <!-- navbar section -->
+      <a href="/" class="logo">
+        <b class="logo__prefix">john<em class="logo__suffix">lamy</em></b>
+      </a>
+      <button class="nav-toggle" aria-label="toggle navigation">
+        <span class="nav-toggle__icon"></span>
+      </button>
+      <nav class="nav">
+        <ul class="nav_list">
+          <li class="nav_list__item">
+            <a href="#home" class="nav__link">home</a>
+          </li>
+          <li class="nav_list__item">
+            <a href="#my-services" class="nav__link">my services</a>
+          </li>
+          <li class="nav_list__item">
+            <a href="#about-me" class="nav__link">about me</a>
+          </li>
+          <li class="nav_list__item">
+            <a href="#my-work" class="nav__link">my work</a>
+          </li>
+        </ul>
+      </nav>
+    </section>
+    <!-- end navbar section -->
+
+    <header class="header" id="home">
+      <!-- header section-->
+      <h1 class="section__title section__title--header">
+        Hi, I am <em>John Lamy</em>
+      </h1>
+      <p class="section__subtitle section__subtitle--header">front-end dev</p>
+      <img
+        src="/assets/imgs/john-lamy-profile.jpg"
+        alt="Profile picture of John Lamy"
+        class="header__img"
+      />
+    </header>
+    <!-- end header section-->
+
+    <section class="hero" id="my-services">
+      <!-- hero section -->
+      <h1 class="section__title section__title--hero">what I do</h1>
+      <div class="hero__services">
+        <div class="hero__service">
+          <h2>social media web app</h2>
+          <p>
+            Currently working on a
+            <a href="https://github.com/johnclamy/pet-friends-app"
+              >social media web application for pet owners</a
+            >. This app will enable users to exchange ideas and find new ways to
+            groom and breed their pets. The front-end of the app is build with a
+            Typescript variant of React JS and styled with custom CSS. The
+            back-end relies on Firebase-v9 for hosting, authentication, storing
+            images and saving data.
+          </p>
+        </div>
+        <div class="hero__service">
+          <h2>react JS CRUD apps</h2>
+          <p>
+            A
+            <a href="https://todo-app-4b9fc.web.app/"
+              >full stack CRUD application</a
+            >
+            that includes authentication, hosting and data management via
+            Firebase-v9 libraries. The styling was provided with the help of
+            React-Bootstrap5. The app is packaged using ViteJS and also uses
+            version 6 of React-Router-Dom.
+          </p>
+        </div>
+        <div class="hero__service">
+          <h2>nextJS blog/ app</h2>
+          <p>
+            A <a href="https://www.jemsea.com/">movie blog/app</a> developed
+            with Next.JS that had its specifications requested by a client. The
+            app uses Contentful to store and manage data. React-Bootstrap5 was
+            used for the styling. Another package of relevance was React-Player.
+            It was used to enable a swift development of the media features.
+          </p>
+        </div>
+      </div>
+      <a href="#my-work" class="btn">my work</a>
+    </section>
+    <!-- end hero section -->
+
+    <article class="about-me" id="about-me">
+      <!-- about me section -->
+      <h1 class="section__title section__title--about">who am I?</h1>
+      <p class="section__subtitle section__subtitle--about">
+        Web developer based in London.
+      </p>
+      <section class="about-me__content">
+        <p>
+          I have over ten years experience in web development. Initially build
+          websites using content management systems such as Drupal 7 as an
+          administrator. I then moved into CSS to customize the styling of
+          Drupal websites. JavaScript became the next logical step in the web
+          developer learning path. I was no stranger to programming before
+          JavaScript as I was already reasonably versed in Java. This made the
+          move to Typescript even more attractive. Today, I use Typescript for
+          all my web endeavors, including on the server side with Firebase.
+        </p>
+        <p>
+          Prior to embarking on a full time web development career, I worked as
+          a data analysis technician for a Reinsurance company in the city of
+          London. This work included, but was not limited to, collecting and
+          administering broker reinsurance files and preparing the files for
+          broker use.
+        </p>
+      </section>
+      <img
+        src="/assets/imgs/john-lamy-working.jpg"
+        alt="Jane Doey working"
+        class="about-me__img"
+      />
+    </article>
+    <!-- end about me section -->
+
+    <section class="my-work" id="my-work">
+      <!-- my work section -->
+      <h1 class="section__title section__title--my-work">my work</h1>
+      <p class="section__subtitle section__subtitle--my-work">
+        Links to my work on <span>github</span>
+      </p>
+      <div class="my-work__portfolio">
+        <a
+          href="https://todo-app-4b9fc.web.app/"
+          class="my-work__portfolio__img-link"
+        >
+          <img
+            src="/assets/imgs/portfolio-01.png"
+            alt=""
+            class="my-work__portfolio__img"
+          />
+        </a>
+        <a href="https://www.jemsea.com/" class="my-work__portfolio__img-link">
+          <img
+            src="/assets/imgs/portfolio-02.png"
+            alt=""
+            class="my-work__portfolio__img"
+          />
+        </a>
+        <a href="https://www.jemsea.com/" class="my-work__portfolio__img-link">
+          <img
+            src="/assets/imgs/portfolio-03.png"
+            alt=""
+            class="my-work__portfolio__img"
+          />
+        </a>
+        <a
+          href="https://todo-app-4b9fc.web.app/"
+          class="my-work__portfolio__img-link"
+        >
+          <img
+            src="/assets/imgs/portfolio-04.jpg"
+            alt=""
+            class="my-work__portfolio__img"
+          />
+        </a>
+        <a
+          href="https://github.com/johnclamy/"
+          class="my-work__portfolio__img-link"
+        >
+          <img
+            src="/assets/imgs/portfolio-05.png"
+            alt=""
+            class="my-work__portfolio__img"
+          />
+        </a>
+        <a
+          href="https://github.com/johnclamy/"
+          class="my-work__portfolio__img-link"
+        >
+          <img
+            src="/assets/imgs/portfolio-06.png"
+            alt=""
+            class="my-work__portfolio__img"
+          />
+        </a>
+        <a href="https://www.jemsea.com/" class="my-work__portfolio__img-link">
+          <img
+            src="/assets/imgs/portfolio-07.png"
+            alt=""
+            class="my-work__portfolio__img"
+          />
+        </a>
+        <a
+          href="https://github.com/johnclamy/"
+          class="my-work__portfolio__img-link"
+        >
+          <img
+            src="/assets/imgs/portfolio-08.png"
+            alt=""
+            class="my-work__portfolio__img"
+          />
+        </a>
+        <a
+          href="https://todo-app-4b9fc.web.app/"
+          class="my-work__portfolio__img-link"
+        >
+          <img
+            src="/assets/imgs/portfolio-09.png"
+            alt=""
+            class="my-work__portfolio__img"
+          />
+        </a>
+        <a
+          href="https://github.com/johnclamy/"
+          class="my-work__portfolio__img-link"
+        >
+          <img
+            src="/assets/imgs/portfolio-10.png"
+            alt=""
+            class="my-work__portfolio__img"
+          />
+        </a>
+      </div>
+    </section>
+    <!-- end my worh section -->
+
+    <footer class="footer">
+      <!-- footer section -->
+      <a href="mailto:johnclamy@gmail.com" class="footer__link"
+        >johnclamy@gmail.com</a
+      >
+      <div class="social-icons">
+        <a href="https://github.com/johnclamy/" class="social-icons__icon">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a
+          href="https://stackoverflow.com/users/5756347/john-lamy"
+          class="social-icons__icon"
+        >
+          <i class="fa-brands fa-stack-overflow"></i>
+        </a>
+      </div>
+    </footer>
+    <!-- end footer section -->
+    <script>
+      const navToggle = document.querySelector(".nav-toggle");
+      const navLinks = document.querySelectorAll(".nav__link");
+
+      navToggle.addEventListener("click", () => {
+        document.body.classList.toggle("nav-open");
+      });
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          document.body.classList.remove("nav-open");
+        });
+      });
+    </script>
+  </body>
+</html>
